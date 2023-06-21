@@ -1,0 +1,28 @@
+{
+    "lesson_plan": [
+        {
+            "section_title": "xxx",
+            "steps": [
+                {
+                    "description": "xxx",
+                    "masterial_type": "LLM_CHAT",
+                    "chat_goal": "yyy"
+                }
+            ]
+        },
+        {
+            "section_title": "xxx",
+            "steps": [
+                {
+                    "description": "xxx",
+                    "masterial_type": "content_repo",
+                    "material_ids": [
+                        123,
+                        456
+                    ]
+                }
+            ]
+
+        }
+    ]
+}
