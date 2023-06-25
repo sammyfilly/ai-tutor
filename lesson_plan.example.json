@@ -1,21 +1,21 @@
 {
-    "lesson_plan": [
+    "sections": [
         {
             "section_title": "xxx",
-            "steps": [
+            "activities": [
                 {
                     "description": "xxx",
                     "masterial_type": "LLM_CHAT",
-                    "chat_goal": "yyy"
+                    "content": "yyy"
                 }
             ]
-        },
+        },     
         {
             "section_title": "xxx",
-            "steps": [
+            "activities": [
                 {
                     "description": "xxx",
-                    "masterial_type": "content_repo",
+                    "masterial_type": "CONTENT_REPO",
                     "material_ids": [
                         123,
                         456
