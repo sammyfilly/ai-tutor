@@ -1,11 +1,14 @@
+from typing import Callable
 import openai  # used for calling the OpenAI API
 from config import chatgpt_deployment_id
+
 
 color_prefix_by_role = {
     "system": "\033[0m",  # gray
     "user": "\033[0m",  # gray
     "assistant": "\033[92m",  # green
 }
+
 
 class Planner:
     def __init__(self, print_function=print) -> None:
@@ -285,7 +288,10 @@ class Planner:
     * 5 role play games, wtih material_ids=[201,202,203,204,205]
     * 5 read aloud questions, wtih material_ids=[301,302,303,304,305]"""
 
-    def plan(self, essay_content: str, student_requirement: str, ai_teacher_abilities: str = ai_teacher_abilities, available_materials: str = available_materials):
+    def do_nothing_result_handler(result: str):
+        pass
+
+    def plan(self, essay_content: str, student_requirement: str, result_handler: Callable[[str], None] = do_nothing_result_handler, ai_teacher_abilities: str = ai_teacher_abilities, available_materials: str = available_materials):
         """Returns a lesson plan for a given student's requirement and essay content, using a 3-step GPT prompt."""
         [explain_system_message, explain_user_message, explain_assistant_message] = self.detailed_explanation_of_student_requirements(
             essay_content,
@@ -302,5 +308,5 @@ class Planner:
             plan_user_message, plan_assistant_message,
             available_materials,
         )
-
+        result_handler(execution)
         return execution

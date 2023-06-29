@@ -4,17 +4,12 @@ from plan_bot import create_plan_bot
 from llm_material_bot import create_llm_material_player_bot
 
 
-
 with gr.Blocks() as demo:
-    student_requirement_markdown = gr.Markdown("### Requirement: ")
-    def update_student_requirement(new_requirement: str) -> None:
-        student_requirement = new_requirement
-        print(f"student_requirement: {student_requirement}")
-        gr.Markdown(f"### Requirement: {student_requirement}")
-
-    create_requirement_bot(update_student_requirement) 
-    create_plan_bot("123")
-    create_llm_material_player_bot("123")
+    intermedia_res_text_area = gr.TextArea(
+        "", label="Intermedia Result", interactive=True, visible=True)
+    create_requirement_bot(intermedia_res_text_area)
+    create_plan_bot(intermedia_res_text_area)
+    create_llm_material_player_bot(intermedia_res_text_area)
 
 demo.queue()
 demo.launch()

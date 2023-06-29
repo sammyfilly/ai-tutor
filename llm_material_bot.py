@@ -1,6 +1,7 @@
 import gradio as gr
 import openai
 import json
+import random
 from config import chatgpt_deployment_id
 
 llm_material_player_template = """
@@ -48,24 +49,28 @@ llm_material_player_template = """
 }
 """
 
-def create_llm_material_player_bot(goal: str = ""):
+
+def create_llm_material_player_bot(plan_content_component: gr.TextArea):
 
     with gr.Tab("LLMMaterialPlayerBot") as llm_material_player_tab:
-
-        llm_material_player_template_obj = json.loads(llm_material_player_template)
-        llm_material_player_template_obj["ai_tutor"]["Goal"] = goal
-        input_str = json.dumps(llm_material_player_template_obj)
-
-        msg = gr.Text(
-            input_str,
-            lines=1, placeholder="Enter your function under test here")
+        break_down_activity_button = gr.Button(
+            "Break Down Activity", info="Click to break down the activity.")
+        activity_textbox = gr.Textbox(
+            "", label="Random Selected Activity", interactive=True)
+        
         chatbot = gr.Chatbot()
-        clear = gr.ClearButton([msg, chatbot])
+        clear_chat = gr.ClearButton(chatbot)
 
         def user(user_message, history):
-            return user_message, history + [[user_message, None]]
+            input_str = user_message
+            if not history:
+                llm_material_player_template_obj = json.loads(
+                    llm_material_player_template)
+                llm_material_player_template_obj["ai_tutor"]["Goal"] = user_message
+                input_str = json.dumps(llm_material_player_template_obj)
+            return "", history + [[input_str, None]]
 
-        async def bot(msg, history, output):
+        async def bot(history):
             def format_array(array):
                 result = []
                 for index, element in enumerate(array):
@@ -95,9 +100,22 @@ def create_llm_material_player_bot(goal: str = ""):
                     print(f"{content}: ", end="")
                 else:
                     pass
-                yield ["", history]
+                yield history
 
-        response = msg.submit(user, [msg, chatbot], [msg, chatbot], queue=False).then(
-            bot, [msg, chatbot], [msg, chatbot]
+        activity_textbox.submit(user, [activity_textbox, chatbot], [activity_textbox, chatbot], queue=False).then(
+            bot, [chatbot], [chatbot]
         )
+
+        def break_down_plan(plan):
+            try:
+                plan_obj = json.loads(plan)
+                llm_activitie_contents = [f"""{activity["description"]}: {activity["content"]}""" for section in plan_obj["sections"]
+                                          for activity in section["activities"] if activity["masterial_type"] == "LLM_CHAT"]
+                return ["\n".join(llm_activitie_contents), llm_activitie_contents[random.randint(0, len(llm_activitie_contents) - 1)]]
+            except (ValueError, RecursionError):
+                return [[], ""]
+
+        break_down_activity_button.click(break_down_plan, [plan_content_component], [
+            plan_content_component, activity_textbox], queue=False)
+
     return llm_material_player_tab
