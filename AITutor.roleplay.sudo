@@ -83,7 +83,7 @@ AI_Tutor {
 
   function generateRolePlayGameFromEssayAndGoal(Goal, EssayContent, n=5):length=medium; {
     Require that the entire role-playing game can be completed in less than $n rounds of conversation
-    Pick a relatively complete scene from the $EssayContent and use it to generate a role-playing game which is related to the $Goal
+    Take a selection from the $EssayContent and use it to generate a role-playing game which is related to the $Goal
   
     return rolePlayGame
   }
