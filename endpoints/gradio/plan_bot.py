@@ -1,7 +1,7 @@
 import gradio as gr
 from gradio import Text
 import threading
-from plan import Planner
+from tools.plan import Planner
 from queue import Queue
 import time
 
