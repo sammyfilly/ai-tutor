@@ -71,15 +71,11 @@ AI_Tutor {
         } else {
             (
                 Create a natural transition after the previous activity to start the next one.
-                
             ):encourage variation
         }
 
         if activity is "Question and Answer" {
-            QAActivity.State.EssayContent = $State.EssayContent
-            QAActivity.State.Goal = $activity
-            QAActivity.State.StudentProfile = $State.StudentProfile
-            (!全程使用中文进行) Execute QAActivity.teach()
+            activityExecutionResult = getInput({activityType: QAActivity, activityGoal: $activity} as json)
         } else if activity is "Role Play" {
             RolePlayActivity.State.EssayContent = $State.EssayContent
             RolePlayActivity.State.Goal = $activity
