@@ -31,8 +31,6 @@ class Planner:
         elif "content" in delta:
             content = delta["content"]
             self.print_function(content, end="")
-        else:
-            pass
 
     def concat_chunks_in_response(self, response, print_text: bool = True) -> str:
         result = ""
@@ -269,9 +267,7 @@ class Planner:
             temperature=temperature,
             stream=True,
         )
-        execution = self.concat_chunks_in_response(
-            execute_response)
-        return execution
+        return self.concat_chunks_in_response(execute_response)
 
     ai_teacher_abilities = """
     ### LLM Chat
@@ -288,7 +284,7 @@ class Planner:
     * 5 role play games, wtih material_ids=[201,202,203,204,205]
     * 5 read aloud questions, wtih material_ids=[301,302,303,304,305]"""
 
-    def do_nothing_result_handler(result: str):
+    def do_nothing_result_handler(self):
         pass
 
     def plan(self, essay_content: str, student_requirement: str, result_handler: Callable[[str], None] = do_nothing_result_handler, ai_teacher_abilities: str = ai_teacher_abilities, available_materials: str = available_materials):

@@ -57,7 +57,7 @@ def create_llm_material_player_bot(plan_content_component: gr.TextArea):
             "Break Down Activity", info="Click to break down the activity.")
         activity_textbox = gr.Textbox(
             "", label="Random Selected Activity", interactive=True)
-        
+
         chatbot = gr.Chatbot()
         clear_chat = gr.ClearButton(chatbot)
 
@@ -80,6 +80,7 @@ def create_llm_material_player_bot(plan_content_component: gr.TextArea):
                         result.append(
                             {"role": "assistant", "content": element})
                 return result
+
             formatted_msgs = format_array(
                 [msg for pair in history for msg in pair if msg is not None])
             response = openai.ChatCompletion.create(
@@ -98,8 +99,6 @@ def create_llm_material_player_bot(plan_content_component: gr.TextArea):
                     content = delta["content"]
                     history[-1][1] += content
                     print(f"{content}: ", end="")
-                else:
-                    pass
                 yield history
 
         activity_textbox.submit(user, [activity_textbox, chatbot], [activity_textbox, chatbot], queue=False).then(

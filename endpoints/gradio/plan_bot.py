@@ -26,7 +26,7 @@ def create_plan_bot(student_requirements_text_box):
                 output_signal.append(text)
                 print(text, end=end)
 
-            essay_content = f"""
+            essay_content = """
     ### Essay Summary
     《小马过河》讲述了一匹年轻的小马在妈妈的要求下去磨坊驮麦子的过程中，遇到了一条河。小马分别听到了牛和松鼠关于河水深浅的不同说法，犹豫不决，最后决定回家请教妈妈。经过妈妈的启发，小马明白了不能只听别人的话，要自己动脑筋，勇敢尝试。最后，小马顺利地过了河，完成了任务。这个故事教育孩子们要学会独立思考和勇敢尝试。
     ### Essay New words
