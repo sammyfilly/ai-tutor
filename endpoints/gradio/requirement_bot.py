@@ -33,8 +33,6 @@ def create_requirement_bot(student_requirement_result_text_box: gr.Textbox):
                     content = delta["content"]
                     history[-1][1] += content
                     print(f"{content}: ", end="")
-                else:
-                    pass
                 yield [history, ""]
 
             if "###Requirement Analysis Finished###" in history[-1][1]:
